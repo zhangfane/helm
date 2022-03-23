@@ -21,9 +21,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"helm.sh/helm/v3/internal/test/ensure"
-	"helm.sh/helm/v3/pkg/helmpath"
-	"helm.sh/helm/v3/pkg/helmpath/xdg"
+	"github.com/huolunl/helm/v3/internal/test/ensure"
+	"github.com/huolunl/helm/v3/pkg/helmpath"
+	"github.com/huolunl/helm/v3/pkg/helmpath/xdg"
 )
 
 func TestRootCmd(t *testing.T) {

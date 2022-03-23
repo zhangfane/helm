@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package registry // import "helm.sh/helm/v3/internal/experimental/registry"
+package registry // import "github.com/huolunl/helm/v3/internal/experimental/registry"
 
 import (
 	"github.com/containerd/containerd/remotes"

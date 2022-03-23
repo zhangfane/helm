@@ -19,8 +19,8 @@ package helm
 import (
 	"testing"
 
-	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/release"
+	"github.com/huolunl/helm/v3/pkg/chart"
+	"github.com/huolunl/helm/v3/pkg/release"
 )
 
 func TestRollbackCmd(t *testing.T) {

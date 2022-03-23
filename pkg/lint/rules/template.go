@@ -33,10 +33,10 @@ import (
 	"k8s.io/apimachinery/pkg/util/validation/field"
 	"k8s.io/apimachinery/pkg/util/yaml"
 
-	"helm.sh/helm/v3/pkg/chart/loader"
-	"helm.sh/helm/v3/pkg/chartutil"
-	"helm.sh/helm/v3/pkg/engine"
-	"helm.sh/helm/v3/pkg/lint/support"
+	"github.com/huolunl/helm/v3/pkg/chart/loader"
+	"github.com/huolunl/helm/v3/pkg/chartutil"
+	"github.com/huolunl/helm/v3/pkg/engine"
+	"github.com/huolunl/helm/v3/pkg/lint/support"
 )
 
 var (

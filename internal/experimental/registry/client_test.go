@@ -41,7 +41,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"golang.org/x/crypto/bcrypt"
 
-	"helm.sh/helm/v3/pkg/chart"
+	"github.com/huolunl/helm/v3/pkg/chart"
 )
 
 var (

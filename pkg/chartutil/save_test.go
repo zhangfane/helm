@@ -30,9 +30,9 @@ import (
 	"testing"
 	"time"
 
-	"helm.sh/helm/v3/internal/test/ensure"
-	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/chart/loader"
+	"github.com/huolunl/helm/v3/internal/test/ensure"
+	"github.com/huolunl/helm/v3/pkg/chart"
+	"github.com/huolunl/helm/v3/pkg/chart/loader"
 )
 
 func TestSave(t *testing.T) {

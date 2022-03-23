@@ -20,7 +20,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"helm.sh/helm/v3/internal/experimental/registry"
+	"github.com/huolunl/helm/v3/internal/experimental/registry"
 )
 
 func chartSaveAction(t *testing.T) *ChartSave {

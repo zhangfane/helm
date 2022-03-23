@@ -19,7 +19,7 @@ package helm
 import (
 	"testing"
 
-	"helm.sh/helm/v3/pkg/release"
+	"github.com/huolunl/helm/v3/pkg/release"
 )
 
 func TestGetHooks(t *testing.T) {

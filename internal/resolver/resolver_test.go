@@ -18,7 +18,7 @@ package resolver
 import (
 	"testing"
 
-	"helm.sh/helm/v3/pkg/chart"
+	"github.com/huolunl/helm/v3/pkg/chart"
 )
 
 func TestResolve(t *testing.T) {

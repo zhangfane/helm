@@ -21,8 +21,8 @@ import (
 	"io"
 	"path/filepath"
 
-	"helm.sh/helm/v3/internal/experimental/registry"
-	"helm.sh/helm/v3/pkg/chartutil"
+	"github.com/huolunl/helm/v3/internal/experimental/registry"
+	"github.com/huolunl/helm/v3/pkg/chartutil"
 )
 
 // ChartExport performs a chart export operation.

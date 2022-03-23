@@ -28,15 +28,15 @@ import (
 	shellwords "github.com/mattn/go-shellwords"
 	"github.com/spf13/cobra"
 
-	"helm.sh/helm/v3/internal/test"
-	"helm.sh/helm/v3/pkg/action"
-	"helm.sh/helm/v3/pkg/chartutil"
-	"helm.sh/helm/v3/pkg/cli"
-	kubefake "helm.sh/helm/v3/pkg/kube/fake"
-	"helm.sh/helm/v3/pkg/release"
-	"helm.sh/helm/v3/pkg/storage"
-	"helm.sh/helm/v3/pkg/storage/driver"
-	"helm.sh/helm/v3/pkg/time"
+	"github.com/huolunl/helm/v3/internal/test"
+	"github.com/huolunl/helm/v3/pkg/action"
+	"github.com/huolunl/helm/v3/pkg/chartutil"
+	"github.com/huolunl/helm/v3/pkg/cli"
+	kubefake "github.com/huolunl/helm/v3/pkg/kube/fake"
+	"github.com/huolunl/helm/v3/pkg/release"
+	"github.com/huolunl/helm/v3/pkg/storage"
+	"github.com/huolunl/helm/v3/pkg/storage/driver"
+	"github.com/huolunl/helm/v3/pkg/time"
 )
 
 func testTimestamper() time.Time { return time.Unix(242085845, 0).UTC() }
@@ -46,8 +46,8 @@ func init() {
 }
 
 func TestExec(t *testing.T) {
-	Exec("--kube-token","eyJhbGciOiJSUzI1NiIsImtpZCI6InM3a3NnUVdudUFJTVNNTmtaWlA2MmdyS0VGUnkteVhyRDBVbWpNeXJ6VkUifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJuaWthIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Im5pa2EtdG9rZW4tc2hrcmwiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoibmlrYSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjI0MjJiMTg4LWRmNjAtNDMyMi1iNmFiLWExNzEwZTlhZDZlZSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpuaWthOm5pa2EifQ.TqoCWT2euXp1BTbapWh6MaJE9Tqa21sci4LbRMG2Y9Vwg-C_hCL9vDXzVOlfHUFk8-VNc-qZE4Ga2lqsi89z3BO-dddoTKEeznSFetNYksVWPa8rbPI7yOX4_ZhfPbOUYvwltCC-KnLSW1uf5Mu1MchWrSMO0zXey4GbL4T7nb0VNBDebRm6wQLwwukWNSBTT_vv4GK-b6mv1QNjn7hiIz1LuvPuuIqKpBZkAw7tA3dlnsk4MbNJGNvhcxlfEqIn0xjA_8sYCiCZbhaBGqvPAIsUY-Sj4yPmDTeWJvWv66dl_CCTfL0Alzn2zzZrETZ-TVAHdwOiceV5gOYApb4IYQ",
-		"--kube-apiserver", "https://172.29.2.206:6443","--kube-ca-file","/Users/huolun/.ube/ca.crt","--debug","ls")
+	Exec("--kube-token", "eyJhbGciOiJSUzI1NiIsImtpZCI6InM3a3NnUVdudUFJTVNNTmtaWlA2MmdyS0VGUnkteVhyRDBVbWpNeXJ6VkUifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJuaWthIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Im5pa2EtdG9rZW4tc2hrcmwiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoibmlrYSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjI0MjJiMTg4LWRmNjAtNDMyMi1iNmFiLWExNzEwZTlhZDZlZSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpuaWthOm5pa2EifQ.TqoCWT2euXp1BTbapWh6MaJE9Tqa21sci4LbRMG2Y9Vwg-C_hCL9vDXzVOlfHUFk8-VNc-qZE4Ga2lqsi89z3BO-dddoTKEeznSFetNYksVWPa8rbPI7yOX4_ZhfPbOUYvwltCC-KnLSW1uf5Mu1MchWrSMO0zXey4GbL4T7nb0VNBDebRm6wQLwwukWNSBTT_vv4GK-b6mv1QNjn7hiIz1LuvPuuIqKpBZkAw7tA3dlnsk4MbNJGNvhcxlfEqIn0xjA_8sYCiCZbhaBGqvPAIsUY-Sj4yPmDTeWJvWv66dl_CCTfL0Alzn2zzZrETZ-TVAHdwOiceV5gOYApb4IYQ",
+		"--kube-apiserver", "https://172.29.2.206:6443", "--kube-ca-file", "/Users/huolun/.kube/ca.crt", "--debug", "ls")
 }
 
 func runTestCmd(t *testing.T, tests []cmdTestCase) {

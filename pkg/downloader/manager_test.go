@@ -21,10 +21,10 @@ import (
 	"reflect"
 	"testing"
 
-	"helm.sh/helm/v3/pkg/chart"
-	"helm.sh/helm/v3/pkg/chartutil"
-	"helm.sh/helm/v3/pkg/getter"
-	"helm.sh/helm/v3/pkg/repo/repotest"
+	"github.com/huolunl/helm/v3/pkg/chart"
+	"github.com/huolunl/helm/v3/pkg/chartutil"
+	"github.com/huolunl/helm/v3/pkg/getter"
+	"github.com/huolunl/helm/v3/pkg/repo/repotest"
 )
 
 func TestVersionEquals(t *testing.T) {
