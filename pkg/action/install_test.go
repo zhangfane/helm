@@ -496,7 +496,7 @@ func TestInstallReleaseOutputDir(t *testing.T) {
 
 	dir, err := ioutil.TempDir("", "output-dir")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer os.RemoveAll(dir)
 
@@ -532,7 +532,7 @@ func TestInstallOutputDirWithReleaseName(t *testing.T) {
 
 	dir, err := ioutil.TempDir("", "output-dir")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer os.RemoveAll(dir)
 

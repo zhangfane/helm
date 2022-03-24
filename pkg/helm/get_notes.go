@@ -67,7 +67,7 @@ func newGetNotesCmd(cfg *action.Configuration, out io.Writer) *cobra.Command {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	return cmd

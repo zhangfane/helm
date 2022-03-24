@@ -165,7 +165,7 @@ func addInstallFlags(cmd *cobra.Command, f *pflag.FlagSet, client *action.Instal
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 

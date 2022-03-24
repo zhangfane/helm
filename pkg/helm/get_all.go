@@ -73,7 +73,7 @@ func newGetAllCmd(cfg *action.Configuration, out io.Writer) *cobra.Command {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	f.StringVar(&template, "template", "", "go template for formatting the output, eg: {{.Release.Name}}")

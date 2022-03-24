@@ -165,7 +165,7 @@ func addShowFlags(subCmd *cobra.Command, client *action.Show) {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 

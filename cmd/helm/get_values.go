@@ -71,7 +71,7 @@ func newGetValuesCmd(cfg *action.Configuration, out io.Writer) *cobra.Command {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	f.BoolVarP(&client.AllValues, "all", "a", false, "dump all (computed) values")

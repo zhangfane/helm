@@ -80,7 +80,7 @@ func bindOutputFlag(cmd *cobra.Command, varRef *output.Format) {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 

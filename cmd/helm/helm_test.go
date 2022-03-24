@@ -190,7 +190,7 @@ func TestPluginExitCode(t *testing.T) {
 		// We DO call helm's main() here. So this looks like a normal `helm` process.
 		main()
 
-		// As main calls os.Exit, we never reach this line.
+		// As main calls log.Println, we never reach this line.
 		// But the test called this block of code catches and verifies the exit code.
 		return
 	}
@@ -221,7 +221,7 @@ func TestPluginExitCode(t *testing.T) {
 		exiterr, ok := err.(*exec.ExitError)
 
 		if !ok {
-			t.Fatalf("Unexpected error returned by os.Exit: %T", err)
+			t.Fatalf("Unexpected error returned by log.Println: %T", err)
 		}
 
 		if stdout.String() != "" {

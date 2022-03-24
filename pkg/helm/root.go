@@ -117,7 +117,7 @@ func newRootCmd(actionConfig *action.Configuration, out io.Writer, args []string
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	// Setup shell completion for the kube-context flag
@@ -143,7 +143,7 @@ func newRootCmd(actionConfig *action.Configuration, out io.Writer, args []string
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	// We can safely ignore any errors that flags.Parse encounters since

@@ -70,14 +70,14 @@ func main() {
 	cmd, err := newRootCmd(actionConfig, os.Stdout, os.Args[1:])
 	if err != nil {
 		warning("%+v", err)
-		os.Exit(1)
+		log.Println(1)
 	}
 
 	// run when each command's execute method is called
 	cobra.OnInitialize(func() {
 		helmDriver := os.Getenv("HELM_DRIVER")
 		if err := actionConfig.Init(settings.RESTClientGetter(), settings.Namespace(), helmDriver, debug); err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 		if helmDriver == "memory" {
 			loadReleasesInMemory(actionConfig)
@@ -88,9 +88,9 @@ func main() {
 		debug("%+v", err)
 		switch e := err.(type) {
 		case pluginError:
-			os.Exit(e.code)
+			log.Println(e.code)
 		default:
-			os.Exit(1)
+			log.Println(1)
 		}
 	}
 }
@@ -124,17 +124,17 @@ func loadReleasesInMemory(actionConfig *action.Configuration) {
 	for _, path := range filePaths {
 		b, err := ioutil.ReadFile(path)
 		if err != nil {
-			log.Fatal("Unable to read memory driver data", err)
+			log.Println("Unable to read memory driver data", err)
 		}
 
 		releases := []*release.Release{}
 		if err := yaml.Unmarshal(b, &releases); err != nil {
-			log.Fatal("Unable to unmarshal memory driver data: ", err)
+			log.Println("Unable to unmarshal memory driver data: ", err)
 		}
 
 		for _, rel := range releases {
 			if err := store.Create(rel); err != nil {
-				log.Fatal(err)
+				log.Println(err)
 			}
 		}
 	}
