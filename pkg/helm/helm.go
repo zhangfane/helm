@@ -88,7 +88,7 @@ func main() {
 	if err := cmd.Execute(); err != nil {
 		debug("%+v", err)
 		switch e := err.(type) {
-		case pluginError:
+		case PluginError:
 			log.Println(e.code)
 		default:
 			log.Println(1)
@@ -120,12 +120,12 @@ func Exec(args ...string) ([]byte, error) {
 	if err := cmd.Execute(); err != nil {
 		debug("%+v", err)
 		switch e := err.(type) {
-		case pluginError:
+		case PluginError:
 			log.Printf("helm plugin error,%v", e)
 		default:
 			log.Printf("helm error,%v", e)
 		}
-		return nil, err
+		return writer.Bytes(), err
 	}
 	return writer.Bytes(), err
 }

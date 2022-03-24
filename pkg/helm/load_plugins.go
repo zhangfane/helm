@@ -40,7 +40,7 @@ const (
 	pluginDynamicCompletionExecutable = "plugin.complete"
 )
 
-type pluginError struct {
+type PluginError struct {
 	error
 	code int
 }
@@ -138,7 +138,7 @@ func callPluginExecutable(pluginName string, main string, argv []string, out io.
 		if eerr, ok := err.(*exec.ExitError); ok {
 			os.Stderr.Write(eerr.Stderr)
 			status := eerr.Sys().(syscall.WaitStatus)
-			return pluginError{
+			return PluginError{
 				error: errors.Errorf("plugin %q exited with error", pluginName),
 				code:  status.ExitStatus(),
 			}

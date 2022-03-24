@@ -143,9 +143,9 @@ func TestLoadPlugins(t *testing.T) {
 		if runtime.GOOS != "windows" {
 			if err := pp.RunE(pp, tt.args); err != nil {
 				if tt.code > 0 {
-					perr, ok := err.(pluginError)
+					perr, ok := err.(PluginError)
 					if !ok {
-						t.Errorf("Expected %s to return pluginError: got %v(%T)", tt.use, err, err)
+						t.Errorf("Expected %s to return PluginError: got %v(%T)", tt.use, err, err)
 					}
 					if perr.code != tt.code {
 						t.Errorf("Expected %s to return %d: got %d", tt.use, tt.code, perr.code)
