@@ -37,8 +37,8 @@ version.BuildInfo{Version:"v3.2.1", GitCommit:"fe51cd1e31e6a202cba7dead9552a6d41
 
 - Version is the semantic version of the release.
 - GitCommit is the SHA for the commit that this version was built from.
-- GitTreeState is "clean" if there are no local code changes when this binary was
-  built, and "dirty" if the binary was built from locally modified code.
+- GitTreeState is "clean" if there are no local Code changes when this binary was
+  built, and "dirty" if the binary was built from locally modified Code.
 - GoVersion is the version of Go that was used to compile Helm.
 
 When using the --template flag the following properties are available to use in

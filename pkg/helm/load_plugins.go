@@ -42,7 +42,7 @@ const (
 
 type PluginError struct {
 	error
-	code int
+	Code int
 }
 
 // loadPlugins loads plugins into the command list.
@@ -140,7 +140,7 @@ func callPluginExecutable(pluginName string, main string, argv []string, out io.
 			status := eerr.Sys().(syscall.WaitStatus)
 			return PluginError{
 				error: errors.Errorf("plugin %q exited with error", pluginName),
-				code:  status.ExitStatus(),
+				Code:  status.ExitStatus(),
 			}
 		}
 		return err

@@ -114,7 +114,7 @@ func TestLoadPlugins(t *testing.T) {
 		{"args", "echo args", "This echos args", "-a -b -c\n", []string{"-a", "-b", "-c"}, 0},
 		{"echo", "echo stuff", "This echos stuff", "hello\n", []string{}, 0},
 		{"env", "env stuff", "show the env", "env\n", []string{}, 0},
-		{"exitwith", "exitwith code", "This exits with the specified exit code", "", []string{"2"}, 2},
+		{"exitwith", "exitwith Code", "This exits with the specified exit Code", "", []string{"2"}, 2},
 		{"fullenv", "show env vars", "show all env vars", envs + "\n", []string{}, 0},
 	}
 
@@ -147,8 +147,8 @@ func TestLoadPlugins(t *testing.T) {
 					if !ok {
 						t.Errorf("Expected %s to return PluginError: got %v(%T)", tt.use, err, err)
 					}
-					if perr.code != tt.code {
-						t.Errorf("Expected %s to return %d: got %d", tt.use, tt.code, perr.code)
+					if perr.Code != tt.code {
+						t.Errorf("Expected %s to return %d: got %d", tt.use, tt.code, perr.Code)
 					}
 				} else {
 					t.Errorf("Error running %s: %+v", tt.use, err)
@@ -187,7 +187,7 @@ func TestLoadPluginsForCompletion(t *testing.T) {
 			{"remove", []string{"all", "one"}, []string{}, []staticCompletionDetails{}},
 		}},
 		{"exitwith", []string{}, []string{}, []staticCompletionDetails{
-			{"code", []string{}, []string{"a", "b"}, []staticCompletionDetails{}},
+			{"Code", []string{}, []string{"a", "b"}, []staticCompletionDetails{}},
 		}},
 		{"fullenv", []string{}, []string{"q", "z"}, []staticCompletionDetails{
 			{"empty", []string{}, []string{}, []staticCompletionDetails{}},

@@ -89,7 +89,7 @@ func main() {
 		debug("%+v", err)
 		switch e := err.(type) {
 		case PluginError:
-			log.Println(e.code)
+			log.Println(e.Code)
 		default:
 			log.Println(1)
 		}
