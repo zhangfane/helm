@@ -96,7 +96,7 @@ func main() {
 	}
 }
 
-func Exec(args ...string) ([]byte, error) {
+func Exec(isDiff bool, args ...string) ([]byte, error) {
 	os.Args = append([]string{"helm"}, args...)
 	var writer = bytes.Buffer{}
 	kube.ManagedFieldsManager = "helm"
@@ -126,6 +126,9 @@ func Exec(args ...string) ([]byte, error) {
 			log.Printf("helm error,%v", e)
 		}
 		return writer.Bytes(), err
+	}
+	if isDiff {
+		writer.WriteString("No changes detected,skipped update\n")
 	}
 	return writer.Bytes(), err
 }
