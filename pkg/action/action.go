@@ -19,6 +19,7 @@ package action
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -26,6 +27,7 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+	yamlv2 "gopkg.in/yaml.v2"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"k8s.io/client-go/discovery"
@@ -176,6 +178,155 @@ func (c *Configuration) renderResources(ch *chart.Chart, values chartutil.Values
 			fmt.Fprintf(b, "---\n# Source: %s\n%s\n", name, content)
 		}
 		return hs, b, "", err
+	}
+
+	//todo replace manifest
+	const KEY = "nika.cai-inc.com"
+	var v = releaseName
+	for index, m := range manifests {
+		if m.Head.Version == "apps/v1" && (m.Head.Kind == "Deployment" || m.Head.Kind == "ReplicaSet" || m.Head.Kind == "StatefulSet" || m.Head.Kind == "DaemonSet") {
+			apiObj := new(K8sYamlStruct)
+			err := yamlv2.Unmarshal([]byte(m.Content), apiObj)
+			if err != nil {
+				log.Println(err)
+			}
+			if apiObj.Metadata.Labels == nil {
+				apiObj.Metadata.Labels = map[string]string{KEY: v}
+			} else {
+				apiObj.Metadata.Labels[KEY] = v
+			}
+			if apiObj.Spec.Selector.MatchLabels == nil {
+				apiObj.Spec.Selector.MatchLabels = map[string]string{KEY: v}
+			} else {
+				apiObj.Spec.Selector.MatchLabels[KEY] = v
+			}
+			if apiObj.Spec.Template.Metadata.Labels == nil {
+				apiObj.Spec.Template.Metadata.Labels = map[string]string{KEY: v}
+			} else {
+				apiObj.Spec.Template.Metadata.Labels[KEY] = v
+			}
+			var obj map[interface{}]interface{}
+			err = yamlv2.Unmarshal([]byte(m.Content), &obj)
+			if err != nil {
+				log.Println(err)
+			}
+			for k, v := range obj {
+				switch k.(type) {
+				case string:
+					if k == "metadata" {
+						if v == nil {
+							obj[k] = apiObj.Metadata
+						} else {
+							metadata := v.(map[interface{}]interface{})
+							metadata["labels"] = apiObj.Metadata.Labels
+							obj[k] = metadata
+						}
+					}
+					if k == "spec" {
+						if v == nil {
+							obj[k] = apiObj.Spec
+						} else {
+							spec := v.(map[interface{}]interface{})
+							var hasSelector bool
+							var hasTemplate bool
+							for k, v := range spec {
+								switch k.(type) {
+								case string:
+									if k == "selector" {
+										hasSelector = true
+										if v == nil {
+											spec[k] = apiObj.Spec.Selector
+										} else {
+											selector := v.(map[interface{}]interface{})
+											selector["matchLabels"] = apiObj.Spec.Selector.MatchLabels
+											spec[k] = selector
+										}
+									}
+									if k == "template" {
+										hasTemplate = true
+										if v == nil {
+											spec[k] = apiObj.Spec.Template
+										} else {
+											template := v.(map[interface{}]interface{})
+											var hasMetadata bool
+											for k, v := range template {
+												switch k.(type) {
+												case string:
+													if k == "metadata" {
+														hasMetadata = true
+														if v == nil {
+															template[k] = apiObj.Spec.Template.Metadata
+														} else {
+															metadata := v.(map[interface{}]interface{})
+															metadata["labels"] = apiObj.Spec.Template.Metadata.Labels
+															template[k] = metadata
+														}
+													}
+												}
+											}
+											if !hasMetadata {
+												template["metadata"] = apiObj.Spec.Template.Metadata
+											}
+											spec[k] = template
+										}
+									}
+
+								}
+							}
+							if !hasSelector {
+								spec["selector"] = apiObj.Spec.Selector
+							}
+							if !hasTemplate {
+								spec["template"] = apiObj.Spec.Template
+							}
+							obj[k] = spec
+						}
+					}
+				}
+			}
+			res, err := yamlv2.Marshal(obj)
+			if err != nil {
+				log.Println(err)
+			}
+			manifests[index].Content = string(res)
+		}
+		if (m.Head.Version == "v1" && (m.Head.Kind == "Pod" || m.Head.Kind == "Service" || m.Head.Kind == "PersistentVolumeClaim" || m.Head.Kind == "PersistentVolume")) ||
+			(m.Head.Version == "batch/v1" && (m.Head.Kind == "Job" || m.Head.Kind == "CronJob")) {
+			apiObj := new(K8sYamlStruct)
+			err := yamlv2.Unmarshal([]byte(m.Content), apiObj)
+			if err != nil {
+				log.Println(err)
+			}
+			if apiObj.Metadata.Labels == nil {
+				apiObj.Metadata.Labels = map[string]string{KEY: v}
+			} else {
+				apiObj.Metadata.Labels[KEY] = v
+			}
+			var obj map[interface{}]interface{}
+			err = yamlv2.Unmarshal([]byte(m.Content), &obj)
+			if err != nil {
+				log.Println(err)
+			}
+			for k, v := range obj {
+				switch k.(type) {
+				case string:
+					if k == "metadata" {
+						if v == nil {
+							obj[k] = apiObj.Metadata
+						} else {
+							metadata := v.(map[interface{}]interface{})
+							metadata["labels"] = apiObj.Metadata.Labels
+							obj[k] = metadata
+						}
+					}
+				}
+			}
+			content, err := yamlv2.Marshal(obj)
+			if err != nil {
+				log.Println(err)
+			}
+			manifests[index].Content = string(content)
+		}
 	}
 
 	// Aggregate all valid manifests into one big doc.
@@ -417,4 +568,23 @@ func (c *Configuration) Init(getter genericclioptions.RESTClientGetter, namespac
 	c.Log = log
 
 	return nil
+}
+
+type K8sYamlStruct struct {
+	Metadata k8sYamlMetadata `yaml:"metadata"`
+	Spec     Spec            `yaml:"spec"`
+}
+
+type k8sYamlMetadata struct {
+	Labels map[string]string `yaml:"labels"`
+}
+type Spec struct {
+	Selector Selector `yaml:"selector"`
+	Template Template `yaml:"template"`
+}
+type Selector struct {
+	MatchLabels map[string]string `yaml:"matchLabels"`
+}
+type Template struct {
+	Metadata k8sYamlMetadata `yaml:"metadata"`
 }
