@@ -290,8 +290,10 @@ func (c *Configuration) renderResources(ch *chart.Chart, values chartutil.Values
 			}
 			manifests[index].Content = string(res)
 		}
-		if (m.Head.Version == "v1" && (m.Head.Kind == "Pod" || m.Head.Kind == "Service" || m.Head.Kind == "PersistentVolumeClaim" || m.Head.Kind == "PersistentVolume")) ||
-			(m.Head.Version == "batch/v1" && (m.Head.Kind == "Job" || m.Head.Kind == "CronJob")) {
+		if (m.Head.Version == "v1" && (m.Head.Kind == "Pod" || m.Head.Kind == "Service" || m.Head.Kind == "PersistentVolumeClaim" || m.Head.Kind == "PersistentVolume" || m.Head.Kind == "ConfigMap" ||
+			m.Head.Kind == "Secret" || m.Head.Kind == "ServiceAccount")) ||
+			(m.Head.Version == "batch/v1" && (m.Head.Kind == "Job" || m.Head.Kind == "CronJob")) ||
+			(m.Head.Version == "networking.k8s.io/v1" && (m.Head.Kind == "Ingress" || m.Head.Kind == "NetworkPolicy")) {
 			apiObj := new(K8sYamlStruct)
 			err := yamlv2.Unmarshal([]byte(m.Content), apiObj)
 			if err != nil {
