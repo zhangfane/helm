@@ -20,6 +20,7 @@ require (
 	github.com/gobwas/glob v0.2.3
 	github.com/gofrs/flock v0.8.0
 	github.com/gosuri/uitable v0.0.4
+	github.com/huolunl/helm-diff/v3 v3.0.0-20220516082011-51046feda4dd // indirect
 	github.com/jmoiron/sqlx v1.3.1
 	github.com/lib/pq v1.10.0
 	github.com/mattn/go-shellwords v1.0.11
@@ -50,6 +51,5 @@ require (
 )
 
 replace github.com/docker/distribution => github.com/docker/distribution v0.0.0-20191216044856-a8371794149d
-replace (
-	github.com/zhangfane/helm-diff/v3 => /Users/zfane/GolandProjects/helm-diff
-)
+
+replace github.com/zhangfane/helm-diff/v3 => /Users/zfane/GolandProjects/helm-diff
