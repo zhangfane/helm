@@ -83,7 +83,9 @@ func main() {
 			loadReleasesInMemory(actionConfig)
 		}
 	})
-
+	for key, val := range settings.EnvVars() {
+		os.Setenv(key, val)
+	}
 	if err := cmd.Execute(); err != nil {
 		debug("%+v", err)
 		switch e := err.(type) {
