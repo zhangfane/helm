@@ -26,12 +26,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/tools/clientcmd"
-
 	"github.com/huolunl/helm/v3/internal/experimental/registry"
 	"github.com/huolunl/helm/v3/pkg/action"
 	"github.com/huolunl/helm/v3/pkg/repo"
+	diff "github.com/zhangfane/helm-diff/v3/cmd"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 var globalUsage = `The Kubernetes package manager
@@ -94,7 +94,6 @@ func newRootCmd(actionConfig *action.Configuration, out io.Writer, args []string
 
 	settings.AddFlags(flags)
 	addKlogFlags(flags)
-
 	// Setup shell completion for the namespace flag
 	err := cmd.RegisterFlagCompletionFunc("namespace", func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 		if client, err := actionConfig.KubernetesClientSet(); err == nil {
@@ -162,7 +161,9 @@ func newRootCmd(actionConfig *action.Configuration, out io.Writer, args []string
 		return nil, err
 	}
 	actionConfig.RegistryClient = registryClient
-
+	for key, val := range settings.EnvVars() {
+		os.Setenv(key, val)
+	}
 	// Add subcommands
 	cmd.AddCommand(
 		// chart commands
@@ -195,6 +196,7 @@ func newRootCmd(actionConfig *action.Configuration, out io.Writer, args []string
 
 		// Hidden documentation generator command: 'helm docs'
 		newDocsCmd(out),
+		diff.New(),
 	)
 
 	// Add *experimental* subcommands
