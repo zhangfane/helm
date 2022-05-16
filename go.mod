@@ -52,4 +52,3 @@ require (
 
 replace github.com/docker/distribution => github.com/docker/distribution v0.0.0-20191216044856-a8371794149d
 
-replace github.com/zhangfane/helm-diff/v3 => /Users/zfane/GolandProjects/helm-diff
