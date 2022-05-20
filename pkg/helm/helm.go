@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package helm // import "github.com/huolunl/helm/v3/cmd/helm"
+package helm // import "github.com/huolunl/helm/v3/pkg/helm"
 
 import (
 	"bytes"
