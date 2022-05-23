@@ -26,10 +26,10 @@ import (
 
 	"github.com/spf13/cobra"
 
+	diff "github.com/huolunl/helm-diff/v3/cmd"
 	"github.com/huolunl/helm/v3/internal/experimental/registry"
 	"github.com/huolunl/helm/v3/pkg/action"
 	"github.com/huolunl/helm/v3/pkg/repo"
-	diff "github.com/zhangfane/helm-diff/v3/cmd"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/clientcmd"
 )
