@@ -19,6 +19,7 @@ package helm // import "github.com/huolunl/helm/v3/pkg/helm"
 import (
 	"context"
 	"fmt"
+	diff "github.com/huolunl/helm-diff/v3/cmd"
 	"io"
 	"log"
 	"os"
@@ -195,6 +196,7 @@ func newRootCmd(actionConfig *action.Configuration, out io.Writer, args []string
 
 		// Hidden documentation generator command: 'helm docs'
 		newDocsCmd(out),
+		diff.New(),
 	)
 
 	// Add *experimental* subcommands

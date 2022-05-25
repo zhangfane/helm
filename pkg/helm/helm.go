@@ -19,6 +19,7 @@ package helm // import "github.com/huolunl/helm/v3/pkg/helm"
 import (
 	"bytes"
 	"fmt"
+	"github.com/huolunl/helm/v3/pkg/diff"
 	"io/ioutil"
 	"log"
 	"os"
@@ -46,6 +47,7 @@ var settings = cli.New()
 
 func init() {
 	log.SetFlags(log.Lshortfile)
+	diff.Register(Exec)
 }
 
 func debug(format string, v ...interface{}) {
