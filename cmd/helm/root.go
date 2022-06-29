@@ -196,7 +196,7 @@ func newRootCmd(actionConfig *action.Configuration, out io.Writer, args []string
 
 		// Hidden documentation generator command: 'helm docs'
 		newDocsCmd(out),
-		diff.New(),
+		diff.New(out),
 	)
 
 	// Add *experimental* subcommands

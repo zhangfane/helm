@@ -26,7 +26,7 @@ require (
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/gosuri/uitable v0.0.4
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
-	github.com/huolunl/helm-diff/v3 v3.0.0-20220516082011-51046feda4dd
+	github.com/huolunl/helm-diff/v3 v3.0.0-20220629085446-504bfd2ed8ec
 	github.com/jmoiron/sqlx v1.3.1
 	github.com/lib/pq v1.10.0
 	github.com/mattn/go-colorable v0.1.8 // indirect
